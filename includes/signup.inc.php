@@ -2,7 +2,7 @@
 
 // confirm user accessed page through form
 if (isset($_POST["submit"])) {
-    
+
     $name = $_POST["name"];
     $email = $_POST["email"];
     $username = $_POST["uid"];
@@ -33,10 +33,12 @@ if (isset($_POST["submit"])) {
         exit();
     }
     // checks database to make sure username is not taken
-    if (uidExists($conn, $username) !== false) {
+    if (uidExists($conn, $username, $email) !== false) {
         header("location: ../signup.php?error=usernametaken");
         exit();
     }
+
+    createUser($conn, $name, $email, $username, $pass);
 
 }
 else {
