@@ -8,12 +8,13 @@ if (isset($_POST["submit"])) {
     $username = $_POST["uid"];
     $pass = $_POST["pass"];
     $passRepeat = $_POST["passrpt"];
+    $level = $_POST["level"];
 
     require_once 'dbh.inc.php';
     require_once 'functions.inc.php';
 
     // checks if inputs are completed
-    if (emptyInputSignup($name, $email, $username, $pass, $passRepeat) !== false) {
+    if (emptyInputSignup($name, $email, $username, $pass, $passRepeat, $level) !== false) {
         header("location: ../signup.php?error=emptyinput");
         exit();
     }
@@ -38,7 +39,7 @@ if (isset($_POST["submit"])) {
         exit();
     }
 
-    createUser($conn, $name, $email, $username, $pass);
+    createUser($conn, $name, $email, $username, $pass, $level);
 
 }
 else {

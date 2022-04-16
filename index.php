@@ -1,9 +1,9 @@
 <?php include_once 'header.php'; ?>
 
-    <h3>COP 4710 Final Project</h3>
+    <h2>COP 4710 Final Project</h2>
     <?php 
         if (isset($_SESSION["userid"])) {
-            echo "<p>Welcome <b>" . $_SESSION["useruid"] . "!</b></p>";
+            echo "<p class='welcome'>Welcome <b>" . $_SESSION["userfullname"] . "!</b></p>";
         }
     ?>
     <p>Website Content</p>

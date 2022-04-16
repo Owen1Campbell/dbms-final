@@ -4,13 +4,15 @@
 <html>
     <head>
         <title>PHP Homepage</title>
+        <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
         <nav>
             <div class="header">
-                <a href="index.php"><h1>HOME</h1>
                 <ul>
+                    <li><a href="index.php">HOME</a></li>
                     <li><a href="index.php">Dashboard</a></li>
+                    <li><a href="list.php">Events</a></li>
                     <?php 
                         if (isset($_SESSION["userid"])) {
                             echo "<li><a href='profile.php'>Profile</a></li>";
@@ -24,4 +26,4 @@
                 </ul>
             </div>
         </nav>
-        <div class="body">
+        <div class="sitebody">

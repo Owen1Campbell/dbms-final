@@ -1,8 +1,8 @@
 <?php
 
-function emptyInputSignup($name, $email, $username, $pass, $passRepeat) {
+function emptyInputSignup($name, $email, $username, $pass, $passRepeat, $level) {
     $result;
-    if (empty($name) || empty($email) || empty($username) || empty($pass) || empty($passRepeat)) {
+    if (empty($name) || empty($email) || empty($username) || empty($pass) || empty($passRepeat) || empty($level)) {
         $result = true;
     }
     else {
@@ -67,8 +67,8 @@ function uidExists($conn, $username, $email) {
     mysqli_stmt_close($stmt);
 }
 
-function createUser($conn, $name, $email, $username, $pass) {
-    $sql = "INSERT INTO users (usersName, usersEmail, usersUid, usersPass) VALUES (?, ?, ?, ?);";
+function createUser($conn, $name, $email, $username, $pass, $level) {
+    $sql = "INSERT INTO users (usersName, usersEmail, usersUid, usersPass, usersLevel) VALUES (?, ?, ?, ?, ?);";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
       header("location: ../signup.php?error=stmtfail");
@@ -77,7 +77,7 @@ function createUser($conn, $name, $email, $username, $pass) {
 
     $hashedPass = password_hash($pass, PASSWORD_DEFAULT);
 
-    mysqli_stmt_bind_param($stmt, "ssss", $name, $email, $username, $hashedPass);
+    mysqli_stmt_bind_param($stmt, "ssssi", $name, $email, $username, $hashedPass, $level);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
     header("location: ../signup.php?error=none");
@@ -114,6 +114,7 @@ function loginUser($conn, $username, $pass) {
         session_start();
         $_SESSION["userid"] = $uidExists["usersId"];
         $_SESSION["useruid"] = $uidExists["usersUid"];
+        $_SESSION["userfullname"] = $uidExists["usersName"];
         header("location: ../index.php");
         exit();
     }

@@ -1,0 +1,36 @@
+CREATE TABLE rso (
+    rsoId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    rsoName VARCHAR(50),
+    rsoAdminid INT(11) NOT NULL,
+    rsoUniv INT NOT NULL,
+    FOREIGN KEY (rsoId) REFERENCES users(usersId),
+    FOREIGN KEY (rsoUniv) REFERENCES university(universityId)
+);
+
+CREATE TABLE event (
+    eventId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    eventName VARCHAR(50),
+    eventDate DATE NOT NULL,
+    eventEmail VARCHAR(128),
+    eventPhone VARCHAR(14),
+    eventDesc VARCHAR(4096),
+    eventCategory INT,
+    eventAddress VARCHAR(128),
+    eventHost VARCHAR(50),
+    eventIsPublic BOOL,
+    eventPictures VARCHAR(2048),
+    FOREIGN KEY (eventHost) REFERENCES rso(rsoName)
+);
+
+CREATE TABLE university (
+    universityId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    universityName VARCHAR(128),
+    universityNumStudents INT,
+    eventAddress VARCHAR(128),
+
+)
+
+CREATE TABLE {rso name} members (
+    memberId INT NOT NULL PRIMARY KEY,
+    
+);

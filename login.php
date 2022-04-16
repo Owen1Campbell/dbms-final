@@ -4,8 +4,10 @@
         <h2>Log In</h2>
         <form action="includes/login.inc.php" method="post">
             <input type="text" name="uid" placeholder="Username or Email">
+            <br />
             <input type="password" name="pass" placeholder="Password">
-            <button type="submit" name="submit">Log In</button>
+            <br />
+            <button type="submit" name="submit" class='button'>Log In</button>
         </form>
         <div class = "sysmsg">
         <?php
