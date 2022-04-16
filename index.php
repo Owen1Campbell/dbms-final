@@ -7,6 +7,9 @@
         }
     ?>
     <p>Website Content</p>
+    <div class='createdmsg'>
+        fdsafs
+    </div>
     
 
 <?php include_once 'footer.php'; ?>    

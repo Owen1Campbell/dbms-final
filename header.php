@@ -12,9 +12,9 @@
                 <ul>
                     <li><a href="index.php">HOME</a></li>
                     <li><a href="index.php">Dashboard</a></li>
-                    <li><a href="list.php">Events</a></li>
                     <?php 
                         if (isset($_SESSION["userid"])) {
+                            echo "<li><a href='list.php'>Events</a></li>";
                             echo "<li><a href='profile.php'>Profile</a></li>";
                             echo "<li><a href='includes/logout.inc.php'>Logout</a></li>";
                         }

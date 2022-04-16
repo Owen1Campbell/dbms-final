@@ -115,7 +115,57 @@ function loginUser($conn, $username, $pass) {
         $_SESSION["userid"] = $uidExists["usersId"];
         $_SESSION["useruid"] = $uidExists["usersUid"];
         $_SESSION["userfullname"] = $uidExists["usersName"];
+        $_SESSION["userlevel"] = $uidExists["usersLevel"];
         header("location: ../index.php");
         exit();
     }
+}
+
+function emptyInputCreateUniversity($name, $numstudents, $address) {
+    $result;
+    if (empty($name) || empty($numstudents || empty($address))) {
+        $result = true;
+    }
+    else {
+        $result = false;
+    }
+    return $result;
+}
+
+function univNameTaken($conn, $name) {
+    $sql = "SELECT * FROM users WHERE usersUid = ? OR usersEmail = ?;";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+      header("location: ../signup.php?error=stmtfail");
+      exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "s", $name);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    if ($row = mysqli_fetch_assoc($resultData)) {
+      return $row;
+    }
+    else {
+      $result = false;
+      return $result;
+    }
+    mysqli_stmt_close($stmt);
+}
+
+function createUniversity($conn, $name, $numStudents, $address) {
+    $sql = "INSERT INTO university (universityName, universityNumStudents, universityAddress) VALUES (?, ?, ?);";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+      header("location: ../signup.php?error=stmtfail");
+      exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "sis", $name, $numStudents, $address);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ../list.php?create=university");
+    exit();
 }

@@ -27,7 +27,6 @@ CREATE TABLE university (
     universityName VARCHAR(128),
     universityNumStudents INT,
     eventAddress VARCHAR(128),
-
 )
 
 CREATE TABLE {rso name} members (
