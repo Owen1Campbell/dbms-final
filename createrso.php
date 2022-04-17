@@ -3,6 +3,7 @@
 <h2>Create RSO</h2>
 <form action="includes/createrso.inc.php" method="post">
     <input type="text" name="name" placeholder="RSO Name"><br />
+    <textarea name="description" rows="5" placeholder="RSO Description"></textarea><br />
     <?php 
         if (isset($_SESSION["userid"])) {
             echo "<p>RSO Admin: <b>" . $_SESSION["userfullname"] . "</b></p>";
@@ -30,8 +31,6 @@
             echo "<p class='sysmsg'>*Error: Current user data not found</p>";
         }
     ?>
-    <textarea name="description" rows="5" placeholder="RSO Description"></textarea><br />
-    
     <button type="submit" name="submit" class='button'>Create</button>
 </form>
 <div class = "sysmsg">

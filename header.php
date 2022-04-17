@@ -15,7 +15,8 @@
                     <?php 
                         if (isset($_SESSION["userid"])) {
                             echo "<li><a href='list.php'>Events</a></li>";
-                            echo "<li><a href='profile.php'>Profile</a></li>";
+                            echo "<li><a href='rsolist.php'>RSOs</a></li>";
+                            // echo "<li><a href='profile.php'>Profile</a></li>";
                             echo "<li><a href='includes/logout.inc.php'>Logout</a></li>";
                         }
                         else {

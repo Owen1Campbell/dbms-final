@@ -216,13 +216,39 @@ function createRSO($conn, $name, $adminId, $univId, $desc) {
     mysqli_stmt_bind_param($stmt, "siis", $name, $adminId, $univId, $desc);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
+
+    // create table for enrollment list
+    $name = str_replace(" ", "", $name);
+    $name = strtolower($name);
+    $sql = "CREATE TABLE $name (memberId INT);";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+      header("location: ../createrso.php?error=stmtfail1");
+      exit();
+    }
+
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+
+    // enter admin id in table
+    $sql = "INSERT INTO $name (memberId) VALUES (?);";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+      header("location: ../createrso.php?error=stmtfail2");
+      exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "i", $adminId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+
     header("location: ../list.php?create=rso");
     exit();
 }
 
-function emptyInputCreateEvent($name, $adminId, $univId, $desc) {
+function emptyInputCreateEvent($name, $date, $desc, $start) {
     $result;
-    if (empty($name) || empty($adminId) || empty($univId) || empty($desc)) {
+    if (empty($name) || empty($date) || empty($desc) || empty($start)) {
         $result = true;
     }
     else {
@@ -232,7 +258,8 @@ function emptyInputCreateEvent($name, $adminId, $univId, $desc) {
 }
 
 function createEvent($conn, $name, $date, $email, $phone, $desc, $cat, $address, $host, $isPublic, $start, $end) {
-    $sql = "INSERT INTO event (eventName, eventDate, eventEmail, eventPhone, eventDesc, eventCategory, eventAddress, eventHose, eventIsPublic, eventStart, eventEnd) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    $sql = "INSERT INTO events (eventName, eventDate, eventEmail, eventPhone, eventDesc, eventCategory, eventAddress, eventHost, eventIsPublic, eventStart, eventEnd) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
       header("location: ../create.php?error=stmtfail");
@@ -242,6 +269,7 @@ function createEvent($conn, $name, $date, $email, $phone, $desc, $cat, $address,
     mysqli_stmt_bind_param($stmt, "ssssssssiss", $name, $date, $email, $phone, $desc, $cat, $address, $host, $isPublic, $start, $end);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
-    header("location: ../list.php?create=rso");
+
+    header("location: ../list.php?create=event");
     exit();
 }

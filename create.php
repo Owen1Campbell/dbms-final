@@ -75,10 +75,11 @@
     </select>
     <br />
     <br />
-    <input type="checkbox" id="public" name="public">
+    <input type="hidden" name="public" value=0>
+    <input type="checkbox" id="public" name="public" value=1>
     <label for="public">Public Event?</label><br />
     <br />
-    <button type="submit" name="submit" class='button'>Sign Up!</button>
+    <button type="submit" name="submit" class='button'>Create</button>
 </form>
 
 <?php
