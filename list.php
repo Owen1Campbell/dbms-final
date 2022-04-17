@@ -29,5 +29,8 @@
             }
         }
     ?>
-    </div>
+</div>
+<div class='event'>
+
+</div>
 <?php include_once 'footer.php'; ?> 

@@ -4,40 +4,25 @@
 if (isset($_POST["submit"])) {
 
     $name = $_POST["name"];
-    $adminId = $_SESSION["useruid"];
-    // $univId = $_POST["uid"];
+    $adminId = $_POST["adminid"];
+    $univId = $_POST["univid"];
     $desc = $_POST["description"];
 
     require_once 'dbh.inc.php';
     require_once 'functions.inc.php';
 
     // checks if inputs are completed
-    if (emptyInputSignup($name, $email, $username, $pass, $passRepeat, $level) !== false) {
-        header("location: ../signup.php?error=emptyinput");
-        exit();
-    }
-    // checks valid username format
-    if (invalidUid($username) !== false) {
-        header("location: ../signup.php?error=invaliduid");
-        exit();
-    }
-    // checks valid email format
-    if (invalidEmail($email) !== false) {
-        header("location: ../signup.php?error=invalidemail");
-        exit();
-    }
-    // checks if passwords match
-    if (passMatch($pass, $passRepeat) !== false) {
-        header("location: ../signup.php?error=passmismatch");
+    if (emptyInputCreateRSO($name, $adminId, $univId, $desc) !== false) {
+        header("location: ../createrso.php?error=emptyinput");
         exit();
     }
     // checks database to make sure username is not taken
-    if (uidExists($conn, $username, $email) !== false) {
-        header("location: ../signup.php?error=usernametaken");
+    if (rsoExists($conn, $name) !== false) {
+        header("location: ../createrso.php?error=nametaken");
         exit();
     }
 
-    createUser($conn, $name, $email, $username, $pass, $level);
+    createRSO($conn, $name, $adminId, $univId, $desc);
 
 }
 else {

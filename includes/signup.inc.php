@@ -9,6 +9,7 @@ if (isset($_POST["submit"])) {
     $pass = $_POST["pass"];
     $passRepeat = $_POST["passrpt"];
     $level = $_POST["level"];
+    $univid = $_POST["university"];
 
     require_once 'dbh.inc.php';
     require_once 'functions.inc.php';
@@ -39,7 +40,7 @@ if (isset($_POST["submit"])) {
         exit();
     }
 
-    createUser($conn, $name, $email, $username, $pass, $level);
+    createUser($conn, $name, $email, $username, $pass, $level, $univid);
 
 }
 else {

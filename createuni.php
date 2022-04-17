@@ -3,7 +3,7 @@
 <form action="includes/createuni.inc.php" method="post">
     <input type="text" name="name" placeholder="University Name"><br />
     <input type="text" name="location" placeholder="Address"><br />
-    <input type="text" name="numstudents" placeholder="Number of Students"><br />
+    <input type="number" name="numstudents" placeholder="Number of Students" min="0"><br />
     
     <button type="submit" name="submit" class='button'>Create</button>
 </form>

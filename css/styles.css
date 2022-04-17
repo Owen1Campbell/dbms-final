@@ -1,5 +1,5 @@
 body {
-    background-color: blue;
+    background-color: powderblue;
     font-family: Helvetica;
     margin-left: 12%;
     margin-right: 12%;
@@ -65,6 +65,33 @@ input[type=text] {
     width: 50%;
 }
 
+input[type=password] {
+    padding: 12px 20px;
+    margin: 10px 0px;
+    box-sizing: border-box;
+    width: 50%;
+}
+
+input[type=number] {
+    padding: 12px 20px;
+    margin: 10px 0px 10px 0px;
+    box-sizing: border-box;
+    width: 50%;
+}
+
+input[type=date] {
+    padding: 12px 20px;
+    margin: 10px 0px 10px 0px;
+    box-sizing: border-box;
+    width: 50%;
+}
+
+input[type=time] {
+    padding: 12px 20px;
+    margin: 10px 0px 10px 0px;
+    box-sizing: border-box;
+}
+
 textarea {
     padding: 12px 20px;
     margin: 10px 0px 10px 0px;
@@ -72,9 +99,9 @@ textarea {
     width: 50%;
 }
 
-input[type=password] {
+select option {
     padding: 12px 20px;
-    margin: 10px 0px;
+    margin: 10px 0px 10px 0px;
     box-sizing: border-box;
     width: 50%;
 }

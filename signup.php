@@ -1,4 +1,9 @@
-<?php include_once 'header.php'; ?>
+<?php include_once 'header.php'; 
+    include_once 'includes/dbh.inc.php'; 
+    $sql = "SELECT * FROM university";
+    $univlist = mysqli_query($conn, $sql);
+?>
+
 
     <section class="signup">
         <h2>Sign Up</h2>
@@ -8,6 +13,15 @@
             <input type="text" name="uid" placeholder="Username"><br />
             <input type="password" name="pass" placeholder="Password"><br />
             <input type="password" name="passrpt" placeholder="Confirm Password"><br />
+            <label for="univ">University</label><br />
+            <select name="university" id="univ">
+                <?php 
+                    while ($univ = mysqli_fetch_array($univlist,MYSQLI_ASSOC)) {
+                            echo "<option value='" . $univ["universityId"] . "'>" . $univ["universityName"] . "</option>";
+                        }
+                ?>
+            </select>
+            <br />
             <br />
             <input type="radio" id="student" name="level" value="3">
             <label for="student">Student</label><br />
@@ -40,7 +54,7 @@
                 echo "<p>* Error, please try again</p>";
             }
             else if ($_GET["error"] == "none") {
-                echo "<p>* Sign up successful!</p>";
+                echo "</div><div class=createdmsg><p>Sign up successful!</p>";
             }
         }
     ?>

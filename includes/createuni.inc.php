@@ -4,7 +4,7 @@
 if (isset($_POST["submit"])) {
 
     $name = $_POST["name"];
-    $numStudents = $_POST["numstudents"];
+    $numstudents = $_POST["numstudents"];
     $address = $_POST["location"];
 
     require_once 'dbh.inc.php';
@@ -12,16 +12,16 @@ if (isset($_POST["submit"])) {
 
     // checks if inputs are completed
     if (emptyInputCreateUniversity($name, $numstudents, $address) !== false) {
-        header("location: ../signup.php?error=emptyinput");
+        header("location: ../createuni.php?error=emptyinput");
         exit();
     }
     // checks database to make sure name is not taken
     if (univNameTaken($conn, $name) !== false) {
-        header("location: ../signup.php?error=nametaken");
+        header("location: ../createuni.php?error=nametaken");
         exit();
     }
 
-    createUniversity($conn, $name, $numStudents, $address);
+    createUniversity($conn, $name, $numstudents, $address);
 
 }
 else {
