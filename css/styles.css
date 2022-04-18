@@ -200,3 +200,16 @@ label {
 .rsoentry a:hover {
     text-decoration: underline;
 }
+
+.comment {
+    width: 60%;
+    border-left: 3px solid midnightblue;
+    margin: 0 10px;
+    padding: 0 20px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.comment i {
+    color: gray;
+}

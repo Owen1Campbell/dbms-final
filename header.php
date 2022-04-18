@@ -11,7 +11,6 @@
             <div class="header">
                 <ul>
                     <li><a href="index.php">HOME</a></li>
-                    <li><a href="index.php">Dashboard</a></li>
                     <?php 
                         if (isset($_SESSION["userid"])) {
                             echo "<li><a href='list.php'>Events</a></li>";

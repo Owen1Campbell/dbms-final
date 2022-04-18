@@ -343,3 +343,18 @@ function leaveRso($conn, $name, $userId, $rsoId) {
     header("location: ../rso.php?id=$rsoId&leave=true");
     exit();
 }
+
+function postComment($conn, $userId, $eventId, $comment) {
+  $sql = "INSERT INTO comments (commentUserId, commentEventId, commentContent) VALUES (?, ?, ?);";
+  $stmt = mysqli_stmt_init($conn);
+  if (!mysqli_stmt_prepare($stmt, $sql)) {
+    header("location: ../event.php?id=$eventId&error=stmtfail");
+    exit();
+  }
+
+  mysqli_stmt_bind_param($stmt, "iis", $userId, $eventId, $comment);
+  mysqli_stmt_execute($stmt);
+  mysqli_stmt_close($stmt);
+  header("location: ../event.php?id=$eventId");
+  exit();
+}
