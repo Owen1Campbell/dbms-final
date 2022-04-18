@@ -213,3 +213,13 @@ label {
 .comment i {
     color: gray;
 }
+
+.comment a {
+    font-size: 12px;
+    color: gray;
+    text-decoration: none;
+}
+
+.comment a:hover {
+    text-decoration: underline;
+}

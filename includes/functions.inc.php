@@ -358,3 +358,68 @@ function postComment($conn, $userId, $eventId, $comment) {
   header("location: ../event.php?id=$eventId");
   exit();
 }
+
+function deleteComment($conn, $commentId, $eventId) {
+  $sql = "DELETE FROM comments WHERE commentId = ?;";
+  $stmt = mysqli_stmt_init($conn);
+  if (!mysqli_stmt_prepare($stmt, $sql)) {
+    header("location: event.php?id=$eventId&error=stmtfail");
+    exit();
+  }
+
+  mysqli_stmt_bind_param($stmt, "i", $commentId);
+  mysqli_stmt_execute($stmt);
+  mysqli_stmt_close($stmt);
+  header("location: event.php?id=$eventId");
+  exit();
+}
+
+function modComment($conn, $commentId, $commentContent, $eventId) {
+  $sql = "UPDATE comments SET commentContent = ? WHERE commentId = ?;";
+  $stmt = mysqli_stmt_init($conn);
+  if (!mysqli_stmt_prepare($stmt, $sql)) {
+    header("location: ../event.php?id=$eventId&error=stmtfail");
+    exit();
+  }
+
+  mysqli_stmt_bind_param($stmt, "si", $commentContent, $commentId);
+  mysqli_stmt_execute($stmt);
+  mysqli_stmt_close($stmt);
+  header("location: ../event.php?id=$eventId");
+  exit();
+}
+
+function getRsoMembers($conn, $name) {
+  // set name to lowercase and remove whitespace (matches member db naming conventions)
+  $name = str_replace(" ", "", $name);
+  $name = strtolower($name);
+
+  // declare query
+  $sql = "SELECT * FROM $name;";
+  $stmt = mysqli_stmt_init($conn);
+  if (!mysqli_stmt_prepare($stmt, $sql)) {
+    header("location: rsolist.php?error=stmtfail");
+    exit();
+  }
+
+  mysqli_stmt_execute($stmt);
+
+  $resultData = mysqli_stmt_get_result($stmt);
+
+  if ($row = mysqli_fetch_assoc($resultData)) {
+    return $row;
+  }
+  else {
+    $result = false;
+    return $result;
+  }
+  mysqli_stmt_close($stmt);
+}
+
+function getRsoNumStudents($conn, $name) {
+  // set name to lowercase and remove whitespace (matches member db naming conventions)
+  $name = str_replace(" ", "", $name);
+  $name = strtolower($name);
+
+  $result = mysqli_num_rows($name);
+}

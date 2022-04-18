@@ -41,6 +41,44 @@
             echo "<p><i>You are a member of this RSO!</i></p>";
             echo "<div class='create'><a href='includes/leave.inc.php?id=" . $_GET["id"] . "'>Leave RSO</a></div><br />";
         }
+
+        // set name to lowercase and remove whitespace (matches member db naming conventions)
+        $name = str_replace(" ", "", $row["rsoName"]);
+        $name = strtolower($name);
+
+        // declare query
+        $sql = "SELECT * FROM $name;";
+        $stmt = mysqli_stmt_init($conn);
+        if (!mysqli_stmt_prepare($stmt, $sql)) {
+            header("location: rsolist.php?error=stmtfail");
+            exit();
+        }
+
+        mysqli_stmt_execute($stmt);
+
+        $resultData = mysqli_stmt_get_result($stmt);
+
+        echo "<h2>Members: " . mysqli_num_rows($resultData) . "</h2>";
+        mysqli_stmt_close($stmt);
+        while ($member = mysqli_fetch_array($resultData,MYSQLI_ASSOC)) {
+            // declare query
+            $sql = "SELECT * FROM users WHERE usersId = ?;";
+            $stmt = mysqli_stmt_init($conn);
+            if (!mysqli_stmt_prepare($stmt, $sql)) {
+            header("location: rsolist.php?error=stmtfail");
+            exit();
+            }
+
+            mysqli_stmt_bind_param($stmt, "i", $member["memberId"]);
+            mysqli_stmt_execute($stmt);
+
+            $userResultData = mysqli_stmt_get_result($stmt);
+
+            $user = mysqli_fetch_assoc($userResultData);
+            mysqli_stmt_close($stmt);
+            
+            echo "<p> - " . $user["usersName"] . "</p>";
+        }
     }
     else {
         echo "<h2>RSO not found!</h2>";
