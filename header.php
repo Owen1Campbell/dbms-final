@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>PHP Homepage</title>
+        <title>DBMS Final - Owen Campbell</title>
         <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>

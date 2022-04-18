@@ -1,31 +1,8 @@
 <?php 
     include_once 'header.php'; 
     include_once 'includes/dbh.inc.php';
-    // send superadmins to full rso list page
-    if ($_SESSION["userlevel"] === 2) {
-        header("location: fullrsolist.php");
-    }
 ?>
-<h1>RSOs at 
-    <?php 
-        // get university name from user id
-        $sql = "SELECT * FROM university WHERE universityId = ?;";
-        $stmt = mysqli_stmt_init($conn);
-        if (!mysqli_stmt_prepare($stmt, $sql)) {
-          header("location: rsolist.php?error=stmtfail");
-          exit();
-        }
-    
-        mysqli_stmt_bind_param($stmt, "i", $_SESSION["useruniv"]);
-        mysqli_stmt_execute($stmt);
-    
-        $resultData = mysqli_stmt_get_result($stmt);
-    
-        $uuRow = mysqli_fetch_assoc($resultData);
-        mysqli_stmt_close($stmt);
-        echo $uuRow["universityName"];
-    ?>
-</h1>
+<h1>All RSOs</h1>
 <div class='createdmsg'>
     <?php
         if (isset($_GET["create"])) {
@@ -52,14 +29,9 @@
         }
     ?>
 </div>
-<!-- PLACEHOLDER ENTRY
-    <div class='rsoentry'>
-        <h3><a href="rso.php?id=0">RSO Name</a></h3>
-        <p>RSO Description. This is a short description of the event</p>
-    </div> 
--->
+
 <?php 
-    $sql = "SELECT * FROM rso WHERE rsoUniv = ?";
+    $sql = "SELECT * FROM rso";
 
     // prepare sql query
     $stmt = mysqli_stmt_init($conn);
@@ -67,7 +39,6 @@
         header("location: ../create.php?error=stmtfail");
         exit();
     }
-    mysqli_stmt_bind_param($stmt, "i", $_SESSION["useruniv"]);
 
     // execute and store query results
     mysqli_stmt_execute($stmt);

@@ -99,7 +99,7 @@ function loginUser($conn, $username, $pass) {
     $uidExists = uidExists($conn, $username, $username);
 
     if (uidExists === false) {
-        header("location: ../signup.php?error=wronglogin");
+        header("location: ../login.php?error=wronglogin");
         exit();
     }
 
@@ -107,7 +107,7 @@ function loginUser($conn, $username, $pass) {
     $checkPass = password_verify($pass, $passHashed);
 
     if ($checkPass === false) {
-        header("location: ../signup.php?error=wrongpass");
+        header("location: ../login.php?error=wrongpass");
         exit();
     }
     else if ($checkPass === true) {
@@ -220,7 +220,7 @@ function createRSO($conn, $name, $adminId, $univId, $desc) {
     // create table for enrollment list
     $name = str_replace(" ", "", $name);
     $name = strtolower($name);
-    $sql = "CREATE TABLE $name (memberId INT);";
+    $sql = "CREATE TABLE $name (memberId INT PRIMARY KEY);";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
       header("location: ../createrso.php?error=stmtfail1");
@@ -271,5 +271,75 @@ function createEvent($conn, $name, $date, $email, $phone, $desc, $cat, $address,
     mysqli_stmt_close($stmt);
 
     header("location: ../list.php?create=event");
+    exit();
+}
+
+function userEnrolledRso($conn, $id, $name) {
+    // set name to lowercase and remove whitespace (matches member db naming conventions)
+    $name = str_replace(" ", "", $name);
+    $name = strtolower($name);
+
+    // declare query
+    $sql = "SELECT * FROM $name WHERE memberId = ?;";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+      header("location: rsolist.php?error=stmtfail");
+      exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "i", $id);
+    mysqli_stmt_execute($stmt);
+
+    $resultData = mysqli_stmt_get_result($stmt);
+
+    if ($row = mysqli_fetch_assoc($resultData)) {
+      return $row;
+    }
+    else {
+      $result = false;
+      return $result;
+    }
+    mysqli_stmt_close($stmt);
+}
+
+function addToRso($conn, $name, $userId, $rsoId) {
+    // set name to lowercase and remove whitespace (matches member db naming conventions)
+    $name = str_replace(" ", "", $name);
+    $name = strtolower($name);
+
+    // generate query statement
+    $sql = "INSERT INTO $name (memberId) VALUES (?);";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+      header("location: ../rso.php?id=$rsoId&error=stmtfail");
+      exit();
+    }
+    //echo $stmt;
+    mysqli_stmt_bind_param($stmt, "i", $userId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+
+    header("location: ../rso.php?id=$rsoId&join=true");
+    exit();
+}
+
+function leaveRso($conn, $name, $userId, $rsoId) {
+    // set name to lowercase and remove whitespace (matches member db naming conventions)
+    $name = str_replace(" ", "", $name);
+    $name = strtolower($name);
+
+    // generate query statement
+    $sql = "DELETE FROM $name WHERE memberId = ?;";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+      header("location: ../rso.php?id=$rsoId&error=stmtfail");
+      exit();
+    }
+    //echo $stmt;
+    mysqli_stmt_bind_param($stmt, "i", $userId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+
+    header("location: ../rso.php?id=$rsoId&leave=true");
     exit();
 }
