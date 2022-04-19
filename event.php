@@ -30,7 +30,7 @@
         echo "<div class='rsoentry'>";
         echo "<p><i>" . $row["eventDate"] . " " . $row["eventStart"] . "-" . $row["eventEnd"] . "</i></p>";
         echo "<p><u>Hosted by:</u> " . $row["eventHost"] . "</p>";
-        echo "<p><u>Address:</u> " . $row["eventAddress"] . "</p>";
+        echo "<p><u>Location:</u> " . $row["eventAddress"] . "</p>";
         echo "<p><u>Event Description:</u><br /><br /> " . $row["eventDesc"] . "</p>";
         echo "</div>";
         echo "<div class='event'><h3>Contact Info:</h3>";
