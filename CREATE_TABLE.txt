@@ -1,8 +1,20 @@
+CREATE TABLE users (
+    usersId INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    usersName VARCHAR(50),
+    usersEmail VARCHAR,
+    usersUid VARCHAR,
+    usersPass VARCHAR,
+    usersLevel INT,
+    usersUnivId INT,
+    FOREIGN KEY (usersUnivId) REFERENCES university (universityId)
+);
+
 CREATE TABLE rso (
     rsoId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     rsoName VARCHAR(50),
     rsoAdminid INT(11) NOT NULL,
     rsoUniv INT NOT NULL,
+    rsoDesc VARCHAR(4096),
     FOREIGN KEY (rsoId) REFERENCES users(usersId),
     FOREIGN KEY (rsoUniv) REFERENCES university(universityId)
 );
@@ -18,7 +30,8 @@ CREATE TABLE event (
     eventAddress VARCHAR(128),
     eventHost VARCHAR(50),
     eventIsPublic BOOL,
-    eventPictures VARCHAR(2048),
+    eventStart TIME,
+    eventEnd TIME,
     FOREIGN KEY (eventHost) REFERENCES rso(rsoName)
 );
 
